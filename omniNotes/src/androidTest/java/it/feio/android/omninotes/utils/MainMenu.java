@@ -20,7 +20,7 @@ public class MainMenu {
         mainMenuButton.perform(click());
     }
 
-    public static void clickOnNotes(){
+    static void clickOnNotes(){
         ViewInteraction notes = onView(allOf(withText("Notes"),withId(R.id.title)));
         notes.perform(click());
     }

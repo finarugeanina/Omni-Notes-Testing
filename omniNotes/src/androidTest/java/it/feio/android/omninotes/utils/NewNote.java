@@ -19,7 +19,7 @@ public class NewNote {
     private static ViewInteraction addNewNote = onView(withId(R.id.fab_expand_menu_button));
     private static ViewInteraction detailTitle = onView(allOf(withId(R.id.detail_title),withHint(titleHintText)));
 
-    public static void clickOnAddNewNoteButton() {
+    static void clickOnAddNewNoteButton() {
         clickOnButton(addNewNote);
     }
 

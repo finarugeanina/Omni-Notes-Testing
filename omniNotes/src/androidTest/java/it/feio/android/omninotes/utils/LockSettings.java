@@ -26,11 +26,11 @@ import static org.hamcrest.Matchers.allOf;
 public class LockSettings {
     public static void lockNote(String password, String question, String answer) {
         clickOnLock();
-        AddDetailsForLock(password, question, answer);
+        addDetailsForLock(password, question, answer);
         clickBack();
     }
 
-    private static void AddDetailsForLock(String password, String question, String answer) {
+    private static void addDetailsForLock(String password, String question, String answer) {
         ViewInteraction initialPasswordView = onView(withId(R.id.password));
         ViewInteraction confirmPasswordView = onView(withId(R.id.password_check));
         ViewInteraction questionView = onView(withId(R.id.question));

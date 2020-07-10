@@ -11,12 +11,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static it.feio.android.omninotes.utils.EspressoUtils.clickOnButton;
 import static it.feio.android.omninotes.utils.EspressoUtils.writeText;
-import static it.feio.android.omninotes.utils.NewNote.addDateTime;
-import static it.feio.android.omninotes.utils.NewNote.addTitle;
-import static it.feio.android.omninotes.utils.NewNote.clickOnAddNewNoteButton;
 import static org.hamcrest.Matchers.allOf;
 
-public class NewTextNote {
+public class NewTextNote extends NewNote{
     private static ViewInteraction addNewTextNoteMatcher = onView(withId(R.id.fab_note));
     private static ViewInteraction okButton = onView(allOf(withId(R.id.buttonPositive), withText("OK"), withParent(withId(R.id.button_layout))));
     private static ViewInteraction detailContent = onView(allOf(withId(R.id.detail_content),withHint("Content")));
@@ -26,11 +23,7 @@ public class NewTextNote {
     }
 
     public static void addNewTextNote(String selectedTitle, String selectedContent, String selectedHour, String selectedMinutes) {
-        clickOnAddNewNoteButton();
-        clickOnButton(addNewTextNoteMatcher);
-
-        addTitle(selectedTitle);
-        addContent(selectedContent);
+        addNewTextNote(selectedTitle,selectedContent);
         addDateTime(selectedHour, selectedMinutes);
 
         clickOnButton(okButton);

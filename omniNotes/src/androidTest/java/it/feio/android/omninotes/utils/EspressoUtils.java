@@ -32,8 +32,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static it.feio.android.omninotes.utils.HomePage.openNthNote;
-import static it.feio.android.omninotes.utils.MainMenu.clickOnNotes;
-import static it.feio.android.omninotes.utils.MainMenu.openMainMenu;
 import static it.feio.android.omninotes.utils.MoreOptions.clickOnTrash;
 import static org.hamcrest.Matchers.allOf;
 
@@ -89,7 +87,7 @@ public class EspressoUtils {
     }
 
     public static void clickBack() {
-        onView(isRoot()).perform(waitforViewWithContentDescriptionIsDisplayed("drawer open", 2000));
+        onView(isRoot()).perform(waitForViewWithContentDescriptionIsDisplayed("drawer open", 2000));
         clickOnButton(backArrowButton);
     }
 
@@ -108,8 +106,6 @@ public class EspressoUtils {
                 empty = true;
             }
         }
-        openMainMenu();
-        clickOnNotes();
 
     }
 
@@ -122,7 +118,7 @@ public class EspressoUtils {
         }
     }
 
-    private static ViewAction waitforViewWithContentDescriptionIsDisplayed(final String contentDescription, final long millis) {
+    private static ViewAction waitForViewWithContentDescriptionIsDisplayed(final String contentDescription, final long millis) {
         return new ViewAction() {
             @Override
             public Matcher<View> getConstraints() {

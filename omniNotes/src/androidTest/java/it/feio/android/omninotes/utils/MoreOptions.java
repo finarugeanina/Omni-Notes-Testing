@@ -11,7 +11,7 @@ import static it.feio.android.omninotes.utils.NewNoteStringVariables.moreOptions
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.trashButton;
 
 public class MoreOptions {
-    public static void openMoreOptionsMenu(){
+    private static void openMoreOptionsMenu(){
         clickOnButton(onView(withContentDescription(moreOptionsButton)));
     }
 
