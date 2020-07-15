@@ -12,8 +12,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import it.feio.android.omninotes.utils.NewNoteStringVariables;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -23,6 +21,7 @@ import static it.feio.android.omninotes.utils.EspressoUtils.deleteAllNotes;
 import static it.feio.android.omninotes.utils.HomePage.openNthNote;
 import static it.feio.android.omninotes.utils.LockSettings.lockNote;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.contentIsDisplayedErrorMessage;
+import static it.feio.android.omninotes.utils.NewNoteStringVariables.editPageisNotDisplayedMessage;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.lockedIconNotDisplayedMessage;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.titleNotDisplayedErrorMessage;
 import static it.feio.android.omninotes.utils.NewTextNote.addNewTextNote;
@@ -60,6 +59,6 @@ public class LockedNoteTest {
         Assert.assertTrue(lockedIconNotDisplayedMessage,checkIfMatches(lockedItemView,isDisplayed()));
 
         openNthNote(0);
-        Assert.assertTrue(NewNoteStringVariables.editPageisNotDisplayedMessage,checkIfMatches(editPageView,isDisplayed()));
+        Assert.assertTrue(editPageisNotDisplayedMessage,checkIfMatches(editPageView,isDisplayed()));
     }
 }

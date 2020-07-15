@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.TextView;
 
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
@@ -25,6 +26,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
@@ -34,6 +36,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static it.feio.android.omninotes.utils.HomePage.openNthNote;
 import static it.feio.android.omninotes.utils.MoreOptions.clickOnTrash;
 import static org.hamcrest.Matchers.allOf;
+import static org.junit.Assert.fail;
 
 public class EspressoUtils {
     private static ViewInteraction backArrowButton =  onView(withContentDescription("drawer open"));
@@ -75,6 +78,23 @@ public class EspressoUtils {
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    static void writeSelectedUiObjectWithText(String textToBeFound, String textToBeReplaced){
+        try {
+            UiObject selectedDescription = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).findObject(new UiSelector().text(textToBeFound));
+            selectedDescription.click();
+            selectedDescription.setText(textToBeReplaced);
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getTextFromSelectedUiObject(int index) throws UiObjectNotFoundException {
+
+            UiObject selectedDescription = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).findObject(new UiSelector().index(index));
+
+        return selectedDescription.getText();
     }
 
     public static boolean checkIfTextIsDisplayed(int p, String s) {
@@ -150,5 +170,35 @@ public class EspressoUtils {
                 while (System.currentTimeMillis() < endTime);
             }
         };
+    }
+
+    static String getText(final Matcher<View> matcher) {
+        try {
+            final String[] stringHolder = {null};
+            onView(matcher).perform(new ViewAction() {
+                @Override
+                public Matcher<View> getConstraints() {
+                    return isAssignableFrom(TextView.class);
+                }
+
+                @Override
+                public String getDescription() {
+                    return "get text";
+                }
+
+                @Override
+                public void perform(UiController uiController, View view) {
+                    TextView tv = (TextView) view;
+                    stringHolder[0] = tv.getText().toString();
+                }
+            });
+            if (stringHolder[0] == null || stringHolder[0] == "") {
+                fail("no text found");
+            }
+            return stringHolder[0];
+        } catch (Exception e) {
+            fail("null found");
+            return null;
+        }
     }
 }

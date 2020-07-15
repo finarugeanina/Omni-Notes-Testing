@@ -15,17 +15,12 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withSubstring;
 import static it.feio.android.omninotes.utils.EspressoUtils.checkIfMatches;
 import static it.feio.android.omninotes.utils.EspressoUtils.checkIfTextIsDisplayed;
-import static it.feio.android.omninotes.utils.EspressoUtils.clickBack;
 import static it.feio.android.omninotes.utils.EspressoUtils.deleteAllNotes;
-import static it.feio.android.omninotes.utils.NewNote.dateTime;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.contentNotDisplayedErrorMessage;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.emptyListMessage;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.emptyListNotDisplayedErrorMessage;
-import static it.feio.android.omninotes.utils.NewNoteStringVariables.reminderSetForErrorMessage;
-import static it.feio.android.omninotes.utils.NewNoteStringVariables.reminderSetForMessage;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.singleItemErrorMessage;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.titleNotDisplayedErrorMessage;
 import static it.feio.android.omninotes.utils.NewTextNote.addNewTextNote;
@@ -56,10 +51,6 @@ public class AddSingleTextNoteTest {
 
         Assert.assertTrue(emptyListNotDisplayedErrorMessage, checkIfTextIsDisplayed(emptyListId, emptyListMessage));
         addNewTextNote(title, content , hour, minutes);
-
-        Assert.assertTrue(reminderSetForErrorMessage, checkIfMatches(dateTime, withSubstring(reminderSetForMessage)));
-        Assert.assertTrue("The message: "+ hour +":" + minutes + " is not displayed!", checkIfMatches(dateTime, withSubstring(hour + ":" + minutes)));
-        clickBack();
 
         Assert.assertTrue(singleItemErrorMessage, checkIfMatches(list, hasChildCount(1)));
         Assert.assertTrue(titleNotDisplayedErrorMessage, checkIfTextIsDisplayed(titleId, "Meeting with QA Team"));

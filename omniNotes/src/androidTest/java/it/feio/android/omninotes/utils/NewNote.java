@@ -2,6 +2,8 @@ package it.feio.android.omninotes.utils;
 
 import androidx.test.espresso.ViewInteraction;
 
+import java.util.Random;
+
 import it.feio.android.omninotes.R;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -10,12 +12,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static it.feio.android.omninotes.utils.EspressoUtils.clickOnButton;
 import static it.feio.android.omninotes.utils.EspressoUtils.clickSelectedUiObjectWithDescription;
 import static it.feio.android.omninotes.utils.EspressoUtils.writeText;
+import static it.feio.android.omninotes.utils.NewCheckList.addNewCheckList;
+import static it.feio.android.omninotes.utils.NewTextNote.addNewTextNote;
 import static org.hamcrest.Matchers.allOf;
 
 public class NewNote {
     private static String titleHintText = "Title";
 
-    public static ViewInteraction dateTime = onView(withId(R.id.datetime));
+    static ViewInteraction dateTime = onView(withId(R.id.datetime));
     private static ViewInteraction addNewNote = onView(withId(R.id.fab_expand_menu_button));
     private static ViewInteraction detailTitle = onView(allOf(withId(R.id.detail_title),withHint(titleHintText)));
 
@@ -33,5 +37,32 @@ public class NewNote {
         clickSelectedUiObjectWithDescription(selectedMinutes);
     }
 
+    public static void addMultipleRandomTextNoteOrChecklist(int numberOfTimes){
+        while(numberOfTimes > 0){
+            Random random = new Random();
+            int randomBetweenTextNoteOrCheckList = random.nextInt(2)+1;
+            String randomTitle = generateRandomString();
+            String randomContent1 = generateRandomString();
+            String randomContent2 = generateRandomString();
 
+            if (randomBetweenTextNoteOrCheckList == 1) {
+                addNewTextNote(randomTitle,randomContent1);
+            } else {
+                addNewCheckList(randomTitle,randomContent1,randomContent2);
+            }
+            numberOfTimes--;
+        }
+    }
+
+    private static String generateRandomString() {
+        int leftLimit = 97;
+        int rightLimit = 122;
+        int length = 10;
+        Random random = new Random();
+
+        return random.ints(leftLimit, rightLimit + 1)
+                .limit(length)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+    }
 }
