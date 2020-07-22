@@ -11,22 +11,31 @@ import static it.feio.android.omninotes.utils.NewNoteStringVariables.moreOptions
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.trashButton;
 
 public class MoreOptions {
-    private static void openMoreOptionsMenu(){
+    private static void openMoreOptionsMenu() {
         clickOnButton(onView(withContentDescription(moreOptionsButton)));
     }
 
-    static void clickOnTrash(){
+    /**
+     * This method clicks on the Trash button in More Options Menu
+     */
+    static void clickOnTrash() {
         openMoreOptionsMenu();
         clickOnButton(onView(withText(trashButton)));
     }
 
-    static void clickOnLock(){
+    /**
+     * This method clicks on the Lock button in More Options Menu. The password is added when it's requested.
+     */
+    static void clickOnLock() {
         openMoreOptionsMenu();
         clickOnButton(onView(withText(lockButton)));
         addPasswordWhenRequested();
     }
 
-    public static void clickOnArchive(){
+    /**
+     * This method clicks on the Archive button in More Options Menu. The password is added when it's requested.
+     */
+    public static void clickOnArchive() {
         openMoreOptionsMenu();
         clickOnButton(onView(withText(archiveButton)));
     }

@@ -33,10 +33,13 @@ public class LockedNoteTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void deleteNotes(){
+    public void deleteNotes() {
         deleteAllNotes();
     }
 
+    /**
+     * This test is checking the Lock note functionality
+     */
     @Test
     public void lockedNoteTest() {
         int titleId = R.id.note_title;
@@ -51,14 +54,14 @@ public class LockedNoteTest {
         String title = "Anniversary";
         String content = "Work Anniversary";
 
-        addNewTextNote(title,content);
+        addNewTextNote(title, content);
         lockNote(password, question, answer);
 
         Assert.assertTrue(titleNotDisplayedErrorMessage, checkIfTextIsDisplayed(titleId, title));
         Assert.assertFalse(contentIsDisplayedErrorMessage, checkIfTextIsDisplayed(contentId, content));
-        Assert.assertTrue(lockedIconNotDisplayedMessage,checkIfMatches(lockedItemView,isDisplayed()));
+        Assert.assertTrue(lockedIconNotDisplayedMessage, checkIfMatches(lockedItemView, isDisplayed()));
 
         openNthNote(0);
-        Assert.assertTrue(editPageisNotDisplayedMessage,checkIfMatches(editPageView,isDisplayed()));
+        Assert.assertTrue(editPageisNotDisplayedMessage, checkIfMatches(editPageView, isDisplayed()));
     }
 }

@@ -39,8 +39,15 @@ import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.fail;
 
 public class EspressoUtils {
-    private static ViewInteraction backArrowButton =  onView(withContentDescription("drawer open"));
+    private static ViewInteraction backArrowButton = onView(withContentDescription("drawer open"));
 
+    /**
+     * this method matches the child of a parentMatcher at a specified position
+     *
+     * @param parentMatcher is the param used for matching the parent
+     * @param position      is the param used for specify the position of the children
+     * @return the matcher of the children at the specified position
+     */
     static Matcher<View> childAtPosition(Matcher<View> parentMatcher, int position) {
         return new TypeSafeMatcher<View>() {
             @Override
@@ -58,20 +65,37 @@ public class EspressoUtils {
         };
     }
 
+    /**
+     * this method clicks on a selected button
+     *
+     * @param button
+     */
     static void clickOnButton(ViewInteraction button) {
         button.perform(click());
     }
 
+    /**
+     * this method checks if a viewMatcher matches the View
+     *
+     * @param view        is the ViewInteraction in which the matcher is applied
+     * @param viewMatcher is the matcher
+     * @return true or false, depending if the matcher matches the ViewInteraction
+     */
     public static boolean checkIfMatches(ViewInteraction view, Matcher<View> viewMatcher) {
         try {
             view.check(matches(viewMatcher));
-        }catch (Exception e){
+        } catch (Exception | Error e) {
             return false;
         }
         return true;
     }
 
-    static void clickSelectedUiObjectWithDescription(String contentDescription){
+    /**
+     * this method clicks on a selected UIObject with a specified content description
+     *
+     * @param contentDescription is the param used for searching the UIObject
+     */
+    static void clickSelectedUiObjectWithDescription(String contentDescription) {
         try {
             UiObject selectedDescription = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).findObject(new UiSelector().descriptionContains(contentDescription));
             selectedDescription.click();
@@ -80,7 +104,13 @@ public class EspressoUtils {
         }
     }
 
-    static void writeSelectedUiObjectWithText(String textToBeFound, String textToBeReplaced){
+    /**
+     * this method write a text in a selected UIObject with a specified text
+     *
+     * @param textToBeFound    is the text used for finding the right UIObject
+     * @param textToBeReplaced is the text used when writing in the selected UIObject
+     */
+    static void writeSelectedUiObjectWithText(String textToBeFound, String textToBeReplaced) {
         try {
             UiObject selectedDescription = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).findObject(new UiSelector().text(textToBeFound));
             selectedDescription.click();
@@ -90,35 +120,46 @@ public class EspressoUtils {
         }
     }
 
-    public static String getTextFromSelectedUiObject(int index) throws UiObjectNotFoundException {
-
-            UiObject selectedDescription = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).findObject(new UiSelector().index(index));
-
-        return selectedDescription.getText();
-    }
-
+    /**
+     * this method checks if a text is completely displayed in a view
+     *
+     * @param p is the id used for searching the text
+     * @param s is the text searched
+     * @return true or false - depends if the text is or is not completely displayed
+     */
     public static boolean checkIfTextIsDisplayed(int p, String s) {
-        try{
+        try {
             onView(allOf(withId(p), withText(s))).check(matches(isCompletelyDisplayed()));
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
+    /**
+     * this method is used for going back to the list of notes, after completing a note
+     */
     public static void clickBack() {
         onView(isRoot()).perform(waitForViewWithContentDescriptionIsDisplayed("drawer open", 2000));
         clickOnButton(backArrowButton);
     }
 
+    /**
+     * this method write text in a selected ViewInteraction
+     *
+     * @param stringToBeReplaced is the ViewInteraction searched in which the text will be written
+     * @param stringReplacer     is the text written
+     */
     static void writeText(ViewInteraction stringToBeReplaced, String stringReplacer) {
         stringToBeReplaced.perform(replaceText(stringReplacer));
     }
 
-    public static void deleteAllNotes(){
-
+    /**
+     * this method opens each note and clicks on Trash button until the list is empty
+     */
+    public static void deleteAllNotes() {
         boolean empty = false;
-        while(!empty) {
+        while (!empty) {
             try {
                 openNthNote(0);
                 clickOnTrash();
@@ -126,18 +167,26 @@ public class EspressoUtils {
                 empty = true;
             }
         }
-
     }
 
+    /**
+     * this method adds the password when the pop-up with the password is displayed
+     */
     static void addPasswordWhenRequested() {
-        try{
-            writeText(onView(withId(R.id.password_request)),"parola");
+        try {
+            writeText(onView(withId(R.id.password_request)), "parola");
             clickOnButton(onView(withId(R.id.md_buttonDefaultPositive)));
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("add password", "Exception when trying to add password");
         }
     }
 
+    /**
+     * this ViewAction waits a number of milliseconds for a View with a selected content description to be displayed
+     *
+     * @param contentDescription is the param used for the selected content description
+     * @param millis             is the number of milliseconds
+     */
     private static ViewAction waitForViewWithContentDescriptionIsDisplayed(final String contentDescription, final long millis) {
         return new ViewAction() {
             @Override
@@ -172,6 +221,12 @@ public class EspressoUtils {
         };
     }
 
+    /**
+     * this method returns a String from a Matcher
+     *
+     * @param matcher is the selected Matcher from which we get the text
+     * @return the text from the selected Matcher
+     */
     static String getText(final Matcher<View> matcher) {
         try {
             final String[] stringHolder = {null};

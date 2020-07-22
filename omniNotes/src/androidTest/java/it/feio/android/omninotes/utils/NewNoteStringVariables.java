@@ -14,6 +14,7 @@ public class NewNoteStringVariables {
     static final String lockButton = "Lock";
     static final String archiveButton = "Archive";
     static final String titleButton = "Title";
+    public static final String creationDateButton = "Creation date";
     public static final String lockedIconNotDisplayedMessage = "Locked Icon is not displayed!";
     public static final String archivedIconNotDisplayedMessage = "Archived Icon is not displayed!";
     public static final String contentIsDisplayedErrorMessage = "Content is displayed even if it's locked!";

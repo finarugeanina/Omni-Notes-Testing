@@ -12,8 +12,13 @@ import static it.feio.android.omninotes.utils.EspressoUtils.clickOnButton;
 import static org.hamcrest.Matchers.allOf;
 
 public class HomePage {
+    /**
+     * this method opens a note from the list at a specified position
+     *
+     * @param position is used to specify the position of the note opened
+     */
     public static void openNthNote(int position) {
-        ViewInteraction nthNote = onView(allOf(withId(R.id.root), childAtPosition(withId(R.id.list),position)));
+        ViewInteraction nthNote = onView(allOf(withId(R.id.root), childAtPosition(withId(R.id.list), position)));
         clickOnButton(nthNote);
         addPasswordWhenRequested();
     }

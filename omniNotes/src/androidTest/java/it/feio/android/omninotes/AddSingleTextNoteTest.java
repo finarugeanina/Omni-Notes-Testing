@@ -32,10 +32,13 @@ public class AddSingleTextNoteTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void deleteNotes(){
+    public void deleteNotes() {
         deleteAllNotes();
     }
 
+    /**
+     * This test is checking the functionality of adding a single text note
+     */
     @Test
     public void addSingleTextNoteTest() {
         ViewInteraction list = onView(withId(R.id.list));
@@ -47,13 +50,13 @@ public class AddSingleTextNoteTest {
         String title = "Meeting with QA Team";
         String content = "Read the new specs";
         String hour = "5";
-        String  minutes = "30";
+        String minutes = "30";
 
         Assert.assertTrue(emptyListNotDisplayedErrorMessage, checkIfTextIsDisplayed(emptyListId, emptyListMessage));
-        addNewTextNote(title, content , hour, minutes);
+        addNewTextNote(title, content, hour, minutes);
 
         Assert.assertTrue(singleItemErrorMessage, checkIfMatches(list, hasChildCount(1)));
         Assert.assertTrue(titleNotDisplayedErrorMessage, checkIfTextIsDisplayed(titleId, "Meeting with QA Team"));
-        Assert.assertTrue(contentNotDisplayedErrorMessage,checkIfTextIsDisplayed(contentId, "Read the new specs"));
+        Assert.assertTrue(contentNotDisplayedErrorMessage, checkIfTextIsDisplayed(contentId, "Read the new specs"));
     }
 }
