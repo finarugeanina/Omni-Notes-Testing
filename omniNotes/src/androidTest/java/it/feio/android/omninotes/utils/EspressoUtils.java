@@ -68,9 +68,10 @@ public class EspressoUtils {
     /**
      * this method clicks on a selected button
      *
-     * @param button
+     * @param button is the viewInteraction of the button clicked
      */
     static void clickOnButton(ViewInteraction button) {
+
         button.perform(click());
     }
 
@@ -123,13 +124,13 @@ public class EspressoUtils {
     /**
      * this method checks if a text is completely displayed in a view
      *
-     * @param p is the id used for searching the text
-     * @param s is the text searched
+     * @param idOfTheText  is the id used for searching the text
+     * @param textSearched is the text searched
      * @return true or false - depends if the text is or is not completely displayed
      */
-    public static boolean checkIfTextIsDisplayed(int p, String s) {
+    public static boolean checkIfTextIsDisplayed(int idOfTheText, String textSearched) {
         try {
-            onView(allOf(withId(p), withText(s))).check(matches(isCompletelyDisplayed()));
+            onView(allOf(withId(idOfTheText), withText(textSearched))).check(matches(isCompletelyDisplayed()));
         } catch (Exception e) {
             return false;
         }
@@ -183,6 +184,7 @@ public class EspressoUtils {
 
     /**
      * this ViewAction waits a number of milliseconds for a View with a selected content description to be displayed
+     * https://www.programcreek.com/java-api-examples/index.php?api=android.support.test.espresso.util.TreeIterables
      *
      * @param contentDescription is the param used for the selected content description
      * @param millis             is the number of milliseconds
@@ -223,6 +225,7 @@ public class EspressoUtils {
 
     /**
      * this method returns a String from a Matcher
+     * https://stackoverflow.com/a/48711303
      *
      * @param matcher is the selected Matcher from which we get the text
      * @return the text from the selected Matcher

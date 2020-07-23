@@ -4,7 +4,9 @@ import android.widget.ListView;
 
 import androidx.test.espresso.ViewInteraction;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.feio.android.omninotes.R;
 
@@ -46,20 +48,27 @@ public class SortNotes {
      * @param buttonText - the sorting is done by the text selected e.g. Title, Creation date
      */
     public static void sortBy(String buttonText) {
+        Map<String, Integer> mapWithSortingOptions = new HashMap<>();
+        mapWithSortingOptions.put("Title", 0);
+        mapWithSortingOptions.put("Creation date",1);
+        mapWithSortingOptions.put("Last modification date",2);
+        mapWithSortingOptions.put("Reminder date",3);
+
+
         ViewInteraction sortButton = onView(withId(R.id.menu_sort));
         clickOnButton(sortButton);
         do {
             clickOnButton(onView(withText(buttonText)));
             clickOnButton(sortButton);
 
-        } while (!isSelected());
+        } while (!isSelected(mapWithSortingOptions.get(buttonText)));
         clickOnButton(onView(withText(buttonText)));
     }
 
     /**
-     * This method returns true if the button is checked
+     * This method returns true if the right sort by option is checked
      */
-    private static boolean isSelected() {
-        return checkIfMatches(onView(allOf(withId(R.id.radio), withParent(allOf(withId(R.id.content), withParent(childAtPosition(isAssignableFrom(ListView.class), 1)))))), isChecked());
+    private static boolean isSelected(Integer index) {
+        return checkIfMatches(onView(allOf(withId(R.id.radio), withParent(allOf(withId(R.id.content), withParent(childAtPosition(isAssignableFrom(ListView.class), index)))))), isChecked());
     }
 }
