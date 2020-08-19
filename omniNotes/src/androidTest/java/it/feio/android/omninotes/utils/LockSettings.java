@@ -24,12 +24,26 @@ import static it.feio.android.omninotes.utils.MoreOptions.clickOnLock;
 import static org.hamcrest.Matchers.allOf;
 
 public class LockSettings {
+    /**
+     * this method is used to lock a note
+     *
+     * @param password the password for confirming the lock
+     * @param question the question for confirming the lock
+     * @param answer   the answer of the question for confirming the lock
+     */
     public static void lockNote(String password, String question, String answer) {
         clickOnLock();
         addDetailsForLock(password, question, answer);
         clickBack();
     }
 
+    /**
+     * this method adds details for locking a note
+     *
+     * @param password the password for confirming the lock
+     * @param question the question for confirming the lock
+     * @param answer   the answer of the question for confirming the lock
+     */
     private static void addDetailsForLock(String password, String question, String answer) {
         ViewInteraction initialPasswordView = onView(withId(R.id.password));
         ViewInteraction confirmPasswordView = onView(withId(R.id.password_check));
@@ -38,17 +52,17 @@ public class LockSettings {
         ViewInteraction confirmAnswerView = onView(withId(R.id.answer_check));
         ViewInteraction confirmPasswordRequest = onView(withId(R.id.password_confirm));
 
-        try{
-            writeText(initialPasswordView,password);
-            writeText(confirmPasswordView,password);
+        try {
+            writeText(initialPasswordView, password);
+            writeText(confirmPasswordView, password);
 
             writeText(questionView, question);
             writeText(answerView, answer);
 
-            writeText(confirmAnswerView,answer);
+            writeText(confirmAnswerView, answer);
             closeSoftKeyboard();
 
-            confirmPasswordRequest.check(matches(allOf( isEnabled(), isClickable()))).perform(
+            confirmPasswordRequest.check(matches(allOf(isEnabled(), isClickable()))).perform(
                     new ViewAction() {
                         @Override
                         public Matcher<View> getConstraints() {
@@ -66,8 +80,8 @@ public class LockSettings {
                         }
                     }
             );
-        }catch(Exception e){
-            Log.e("complete the details","There is no need to complete the details for locking the note");
+        } catch (Exception e) {
+            Log.e("complete the details", "There is no need to complete the details for locking the note");
         }
     }
 

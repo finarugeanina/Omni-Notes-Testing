@@ -15,17 +15,18 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 public class MainMenu {
-    public static void openMainMenu(){
-        ViewInteraction mainMenuButton = onView(allOf(isAssignableFrom(ImageButton.class),withParent(withId(R.id.toolbar))));
+    /**
+     * this method opens the Main Menu
+     */
+    public static void openMainMenu() {
+        ViewInteraction mainMenuButton = onView(allOf(isAssignableFrom(ImageButton.class), withParent(withId(R.id.toolbar))));
         mainMenuButton.perform(click());
     }
 
-    static void clickOnNotes(){
-        ViewInteraction notes = onView(allOf(withText("Notes"),withId(R.id.title)));
-        notes.perform(click());
-    }
-
-    public static void viewArchivedNotes(){
+    /**
+     * this method opens the Archived notes list
+     */
+    public static void viewArchivedNotes() {
         ViewInteraction archivedNotes = onView(withText("Archive"));
         archivedNotes.perform(click());
     }

@@ -37,10 +37,13 @@ public class ArchivedTextNoteTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void deleteNotes(){
+    public void deleteNotes() {
         deleteAllNotes();
     }
 
+    /**
+     * This test is checking the Archive functionality
+     */
     @Test
     public void archivedTextNoteTest() {
         String title = "Meeting with QA Team";
@@ -52,7 +55,7 @@ public class ArchivedTextNoteTest {
 
         ViewInteraction archivedItemView = onView(withId(R.id.archivedIcon));
 
-        addNewTextNote(title,content);
+        addNewTextNote(title, content);
         clickBack();
 
         openNthNote(0);
@@ -64,6 +67,6 @@ public class ArchivedTextNoteTest {
 
         Assert.assertTrue(titleNotDisplayedErrorMessage, checkIfTextIsDisplayed(titleId, title));
         Assert.assertTrue(contentNotDisplayedErrorMessage, checkIfTextIsDisplayed(contentId, content));
-        Assert.assertTrue(archivedIconNotDisplayedMessage,checkIfMatches(archivedItemView,isDisplayed()));
+        Assert.assertTrue(archivedIconNotDisplayedMessage, checkIfMatches(archivedItemView, isDisplayed()));
     }
 }

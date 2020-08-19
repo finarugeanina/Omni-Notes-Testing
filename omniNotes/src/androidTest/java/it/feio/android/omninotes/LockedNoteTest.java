@@ -12,8 +12,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import it.feio.android.omninotes.utils.NewNoteStringVariables;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -23,6 +21,7 @@ import static it.feio.android.omninotes.utils.EspressoUtils.deleteAllNotes;
 import static it.feio.android.omninotes.utils.HomePage.openNthNote;
 import static it.feio.android.omninotes.utils.LockSettings.lockNote;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.contentIsDisplayedErrorMessage;
+import static it.feio.android.omninotes.utils.NewNoteStringVariables.editPageisNotDisplayedMessage;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.lockedIconNotDisplayedMessage;
 import static it.feio.android.omninotes.utils.NewNoteStringVariables.titleNotDisplayedErrorMessage;
 import static it.feio.android.omninotes.utils.NewTextNote.addNewTextNote;
@@ -34,10 +33,13 @@ public class LockedNoteTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void deleteNotes(){
+    public void deleteNotes() {
         deleteAllNotes();
     }
 
+    /**
+     * This test is checking the Lock note functionality
+     */
     @Test
     public void lockedNoteTest() {
         int titleId = R.id.note_title;
@@ -52,14 +54,14 @@ public class LockedNoteTest {
         String title = "Anniversary";
         String content = "Work Anniversary";
 
-        addNewTextNote(title,content);
+        addNewTextNote(title, content);
         lockNote(password, question, answer);
 
         Assert.assertTrue(titleNotDisplayedErrorMessage, checkIfTextIsDisplayed(titleId, title));
         Assert.assertFalse(contentIsDisplayedErrorMessage, checkIfTextIsDisplayed(contentId, content));
-        Assert.assertTrue(lockedIconNotDisplayedMessage,checkIfMatches(lockedItemView,isDisplayed()));
+        Assert.assertTrue(lockedIconNotDisplayedMessage, checkIfMatches(lockedItemView, isDisplayed()));
 
         openNthNote(0);
-        Assert.assertTrue(NewNoteStringVariables.editPageisNotDisplayedMessage,checkIfMatches(editPageView,isDisplayed()));
+        Assert.assertTrue(editPageisNotDisplayedMessage, checkIfMatches(editPageView, isDisplayed()));
     }
 }
