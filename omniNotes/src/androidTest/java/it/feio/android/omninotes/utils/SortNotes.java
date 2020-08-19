@@ -11,6 +11,7 @@ import java.util.Map;
 import it.feio.android.omninotes.R;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -48,19 +49,31 @@ public class SortNotes {
      * @param buttonText - the sorting is done by the text selected e.g. Title, Creation date
      */
     public static void sortBy(String buttonText) {
+        int count = 0;
         Map<String, Integer> mapWithSortingOptions = new HashMap<>();
         mapWithSortingOptions.put("Title", 0);
-        mapWithSortingOptions.put("Creation date",1);
-        mapWithSortingOptions.put("Last modification date",2);
-        mapWithSortingOptions.put("Reminder date",3);
-
+        mapWithSortingOptions.put("Creation date", 1);
+        mapWithSortingOptions.put("Last modification date", 2);
+        mapWithSortingOptions.put("Reminder date", 3);
 
         ViewInteraction sortButton = onView(withId(R.id.menu_sort));
         clickOnButton(sortButton);
         do {
-            clickOnButton(onView(withText(buttonText)));
-            clickOnButton(sortButton);
+            onView(withText(buttonText)).perform(longClick());
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            clickOnButton(onView(withId(R.id.fab_expand_menu_button)));
+            clickOnButton(onView(withId(R.id.fab_expand_menu_button)));
 
+            clickOnButton(sortButton);
+            if (count == 10) {
+                break;
+            } else {
+                count++;
+            }
         } while (!isSelected(mapWithSortingOptions.get(buttonText)));
         clickOnButton(onView(withText(buttonText)));
     }
